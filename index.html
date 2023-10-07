@@ -228,6 +228,8 @@
         }
     });
 
+    let parts = [];
+    
     function createMeshFromPart(part) {
       var mesh = new BABYLON.Mesh(part.mesh_id, scene);
       var meshURL = jsonParts[0].models + part.mesh_name;
@@ -242,7 +244,7 @@
 
       mesh.isPickable = true;
       mesh.actionManager = new BABYLON.ActionManager(scene);
-
+      
        // Agregar un observador de cambios de posición y rotación
         mesh.onAfterWorldMatrixUpdateObservable.add(function () {
             // Encuentra la parte correspondiente en jsonParts y actualiza sus propiedades
@@ -260,6 +262,8 @@
             updatedPart.rotation[0].z = BABYLON.Tools.ToDegrees(mesh.rotation.z);
             }
         });
+
+      parts.push(mesh);
 
       return mesh;
     }
@@ -346,6 +350,7 @@
 
 // Función para recopilar la información actualizada de las partes y descargar el JSON
 function downloadJson() {
+  console.log(parts);
   const updatedParts = jsonParts[0].parts.map((part) => {
     const mesh = scene.getMeshByID(part.mesh_id);
     return {
