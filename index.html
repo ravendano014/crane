@@ -290,14 +290,14 @@
 
             pickedMesh = result.pickedMesh;
 
-            //console.log(scene);
+            console.log(scene);
             //console.log(result);
             if (pickedMesh) {
                 pickedMesh.edgesWidth = 40.0;
                 pickedMesh.edgesColor = new BABYLON.Color4(0, 1, 0.87);
                 pickedMesh.enableEdgesRendering();
                 selectedMesh = pickedMesh;
-                console.log(pickedMesh);
+                //console.log(pickedMesh);
                  // Mostrar propiedades en la barra lateral
                 document.getElementById("name").textContent = pickedMesh.uniqueId;
                 document.getElementById("position").textContent = `X: ${pickedMesh.position.x.toFixed(2)}, Y: ${pickedMesh.position.y.toFixed(2)}, Z: ${pickedMesh.position.z.toFixed(2)}`;
