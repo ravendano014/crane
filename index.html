@@ -360,14 +360,14 @@ function downloadJson() {
       mesh_id: part.id,
       mesh_name: part.mame,
       position: {
-        x: part._position._x,
-        y: part._position._y,
-        z: part._position._z,
+        x: part._position.x,
+        y: part._position.y,
+        z: part._position.z,
       },
       rotation: {
-        x: BABYLON.Tools.ToDegrees(part._rotation._x),
-        y: BABYLON.Tools.ToDegrees(part._rotation._y),
-        z: BABYLON.Tools.ToDegrees(part._rotation._z),
+        x: BABYLON.Tools.ToDegrees(part._rotation.x),
+        y: BABYLON.Tools.ToDegrees(part._rotation.y),
+        z: BABYLON.Tools.ToDegrees(part._rotation.z),
       },
     };
   });
