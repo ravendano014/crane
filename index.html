@@ -355,10 +355,10 @@
 function downloadJson() {
   console.log(parts);
   const updatedParts = jsonParts[0].parts.map((part) => {
-    const mesh = scene.getMeshByID(part.mesh_id);
+    const mesh = scene.getMeshByID(part.uniqueId);
     return {
-      mesh_id: part.mesh_id,
-      mesh_name: part.mesh_name,
+      mesh_id: mesh.id,
+      mesh_name: mesh.mame,
       position: {
         x: mesh.position.x,
         y: mesh.position.y,
