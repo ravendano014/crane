@@ -240,7 +240,7 @@
 
       mesh.position = new BABYLON.Vector3(part.position[0].x, part.position[0].y, part.position[0].z);
       mesh.rotation = new BABYLON.Vector3(BABYLON.Tools.ToRadians(part.rotation[0].x), BABYLON.Tools.ToRadians(part.rotation[0].y), BABYLON.Tools.ToRadians(part.rotation[0].z));
-      mesh.visibility = 0.5;
+      mesh.name = part.mesh_name;
 
       mesh.isPickable = true;
       mesh.actionManager = new BABYLON.ActionManager(scene);
