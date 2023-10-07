@@ -354,7 +354,7 @@
 // Función para recopilar la información actualizada de las partes y descargar el JSON
 function downloadJson() {
   console.log(parts);
-  const updatedParts = jsonParts[0].parts.map((part) => {
+  const updatedParts = scene.meshes.map((part) => {
     const mesh = scene.getMeshByID(part.uniqueId);
     // console.log(mesh);
     // console.log(part);
@@ -362,14 +362,14 @@ function downloadJson() {
       mesh_id: part.id,
       mesh_name: part.mame,
       position: {
-        x: part.position[0].x,
-        y: part.position[0].y,
-        z: part.position[0].z,
+        x: part._position._x,
+        y: part._position._y,
+        z: part._position._z,
       },
       rotation: {
-        x: BABYLON.Tools.ToDegrees(part.rotation[0].x),
-        y: BABYLON.Tools.ToDegrees(part.rotation[0].y),
-        z: BABYLON.Tools.ToDegrees(part.rotation[0].z),
+        x: BABYLON.Tools.ToDegrees(part._rotation._x),
+        y: BABYLON.Tools.ToDegrees(part._rotation._y),
+        z: BABYLON.Tools.ToDegrees(part._rotation._z),
       },
     };
   });
