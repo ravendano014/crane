@@ -245,7 +245,7 @@
       mesh.isPickable = true;
       mesh.actionManager = new BABYLON.ActionManager(scene);
       
-      parts.push(mesh);
+      //parts.push(mesh);
 
       return mesh;
     }
@@ -272,7 +272,7 @@
 
             pickedMesh = result.pickedMesh;
 
-            console.log(scene);
+            //console.log(scene);
             //console.log(result);
             if (pickedMesh) {
                 pickedMesh.edgesWidth = 40.0;
@@ -335,7 +335,7 @@
 
 // Función para recopilar la información actualizada de las partes y descargar el JSON
 function downloadJson() {
-  console.log(parts);
+  //console.log(parts);
   const updatedParts = scene.meshes.map((part) => {
     const mesh = scene.getMeshByID(part.uniqueId);
     // console.log(mesh);
@@ -358,17 +358,21 @@ function downloadJson() {
   });
 
   // Actualiza jsonParts
-  for(i=0;(jsonParts.length);i++){
-    jsonParts[0].parts[i].position.x =  updatedParts[i+6+jsonParts.length].position.x;
-    jsonParts[0].parts[i].position.y =  updatedParts[i+6+jsonParts.length].position.y;
-    jsonParts[0].parts[i].position.z =  updatedParts[i+6+jsonParts.length].position.z;
-    jsonParts[0].parts[i].rotation.x =  updatedParts[i+6+jsonParts.length].rotation.x;
-    jsonParts[0].parts[i].rotation.y =  updatedParts[i+6+jsonParts.length].rotation.y;
-    jsonParts[0].parts[i].rotation.z =  updatedParts[i+6+jsonParts.length].rotation.z;
+  for (var i = 0; i < jsonParts[0].parts.length; i++) {
+    // console.log(jsonParts[0].parts[i].position.x);
+
+    jsonParts[0].parts[i].position[0].x =  updatedParts[i+6+jsonParts[0].parts.length].position.x;
+    jsonParts[0].parts[i].position[0].y =  updatedParts[i+6+jsonParts[0].parts.length].position.y;
+    jsonParts[0].parts[i].position[0].z =  updatedParts[i+6+jsonParts[0].parts.length].position.z;
+    jsonParts[0].parts[i].rotation[0].x =  updatedParts[i+6+jsonParts[0].parts.length].rotation.x;
+    jsonParts[0].parts[i].rotation[0].y =  updatedParts[i+6+jsonParts[0].parts.length].rotation.y;
+    jsonParts[0].parts[i].rotation[0].z =  updatedParts[i+6+jsonParts[0].parts.length].rotation.z;
+    //console.log(jsonParts[0].parts[i]);
+    parts.push(jsonParts[0].parts[i]);
    }
 
-  console.log(updatedParts);
-  const jsonContent = JSON.stringify(jsondParts, null, 2);
+  //console.log(updatedParts);
+  const jsonContent = JSON.stringify(jsonParts, null, 2);
   const blob = new Blob([jsonContent], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
