@@ -245,6 +245,8 @@
       mesh.isPickable = true;
       mesh.actionManager = new BABYLON.ActionManager(scene);
       
+      parts.push(mesh);
+
       return mesh;
     }
 
@@ -355,8 +357,18 @@ function downloadJson() {
     };
   });
 
+  // Actualiza jsonParts
+  for(i=0;(jsomParts.length);i++){
+    jsonParts[0].parts[i].position.x =  updatedParts[i+6+jsomParts.length].position.x;
+    jsonParts[0].parts[i].position.y =  updatedParts[i+6+jsomParts.length].position.y;
+    jsonParts[0].parts[i].position.z =  updatedParts[i+6+jsomParts.length].position.z;
+    jsonParts[0].parts[i].rotation.x =  updatedParts[i+6+jsomParts.length].rotation.x;
+    jsonParts[0].parts[i].rotation.y =  updatedParts[i+6+jsomParts.length].rotation.y;
+    jsonParts[0].parts[i].rotation.z =  updatedParts[i+6+jsomParts.length].rotation.z;
+   }
+
   console.log(updatedParts);
-  const jsonContent = JSON.stringify(updatedParts, null, 2);
+  const jsonContent = JSON.stringify(jsondParts, null, 2);
   const blob = new Blob([jsonContent], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
