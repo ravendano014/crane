@@ -245,26 +245,6 @@
       mesh.isPickable = true;
       mesh.actionManager = new BABYLON.ActionManager(scene);
       
-       // Agregar un observador de cambios de posición y rotación
-        mesh.onAfterWorldMatrixUpdateObservable.add(function () {
-            // Encuentra la parte correspondiente en jsonParts y actualiza sus propiedades
-            var partIndex = jsonParts[0].parts.findIndex(function (jsonPart) {
-            return jsonPart.mesh_id === mesh.id;
-            });
-
-            if (partIndex !== -1) {
-            var updatedPart = jsonParts[0].parts[partIndex];
-            updatedPart.position[0].x = mesh.position.x;
-            updatedPart.position[0].y = mesh.position.y;
-            updatedPart.position[0].z = mesh.position.z;
-            updatedPart.rotation[0].x = BABYLON.Tools.ToDegrees(mesh.rotation.x);
-            updatedPart.rotation[0].y = BABYLON.Tools.ToDegrees(mesh.rotation.y);
-            updatedPart.rotation[0].z = BABYLON.Tools.ToDegrees(mesh.rotation.z);
-            }
-        });
-
-      parts.push(mesh);
-
       return mesh;
     }
 
