@@ -58,6 +58,10 @@
         <input type="color" id="colorPicker">
         <button onclick="changeColor()">Apply Color (Z)</button>
         <br>
+        <button id="copy-button">Copy (Ctrl+C)</button>
+        <button id="cut-button">Cut (Ctrl+X)</button>
+        <button id="paste-button">Paste (Ctrl+V)</button>
+        <br><br>
         <button id="downloadJsonButton">Descargar JSON</button>
         <img src="model.jpg" alt="" width="200" height="200">
     </div>
@@ -1338,6 +1342,33 @@ function hexToRgb(hex) {
     
     throw new Error("#000000");
 }
+
+const copyButton = document.getElementById("copy-button");
+const cutButton = document.getElementById("cut-button");
+const pasteButton = document.getElementById("paste-button");
+
+// Variable para almacenar los elementos copiados o cortados
+let copiedOrCutData = null;
+
+// Evento para copiar
+copyButton.addEventListener("click", function () {
+  copiedOrCutData = JSON.parse(JSON.stringify(jsonParts));
+});
+
+// Evento para cortar
+cutButton.addEventListener("click", function () {
+  copiedOrCutData = JSON.parse(JSON.stringify(jsonParts));
+  // Elimina los elementos cortados del arreglo original
+  jsonParts.length = 0;
+});
+
+// Evento para pegar
+pasteButton.addEventListener("click", function () {
+  if (copiedOrCutData) {
+    // Concatena los elementos copiados o cortados al arreglo original
+    jsonParts.push(...copiedOrCutData);
+  }
+});
     </script>
 </body>
 </html>
