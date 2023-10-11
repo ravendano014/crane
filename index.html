@@ -1299,6 +1299,18 @@ document.addEventListener("keydown", function (event) {
         // Llama a la función changeColor() al presionar la tecla "Z"
         changeColor();
     }
+    if (event.ctrlKey) {
+        if (event.key === 'c' || event.key === 'C') {
+            // Ctrl+C: Copiar las shapes seleccionadas al portapapeles
+            copyPart();
+        } else if (event.key === 'x' || event.key === 'X') {
+            // Ctrl+X: Cortar las shapes seleccionadas al portapapeles y eliminarlas
+            cutPart();
+        } else if (event.key === 'v' || event.key === 'V') {
+            // Ctrl+V: Pegar las shapes desde el portapapeles
+            pastePart();
+        }
+    }
 });
 
 function changeColor() {
@@ -1351,24 +1363,36 @@ const pasteButton = document.getElementById("paste-button");
 let copiedOrCutData = null;
 
 // Evento para copiar
-copyButton.addEventListener("click", function () {
-  copiedOrCutData = JSON.parse(JSON.stringify(jsonParts));
-});
+function copyPart() {
+    if (pickedMesh) {
+      copiedOrCutData = pickedMesh ? { ...pickedMesh } : null; // Clona la figura seleccionada
+    }
+  
+}
 
 // Evento para cortar
-cutButton.addEventListener("click", function () {
-  copiedOrCutData = JSON.parse(JSON.stringify(jsonParts));
-  // Elimina los elementos cortados del arreglo original
-  jsonParts.length = 0;
-});
+function cutPart() {
+    if (pickedMesh) {
+        copiedOrCutData = { ...pickedMesh }; // Clona la figura seleccionada
+        // Elimina la figura seleccionada del arreglo shapes
+        const index = jsonParts.indexOf(pickedMesh);
+        if (index !== -1) {
+            jsonParts.splice(index, 1);
+        }
+        pickedMesh = null;
+    }
+}
 
 // Evento para pegar
-pasteButton.addEventListener("click", function () {
-  if (copiedOrCutData) {
-    // Concatena los elementos copiados o cortados al arreglo original
-    jsonParts.push(...copiedOrCutData);
-  }
-});
+function pastePart() {
+    if (pickedMesh) {
+         if (copiedOrCutData) {
+          // Concatena los elementos copiados o cortados al arreglo original
+          jsonParts.push(...copiedOrCutData);
+          loadAndPositionPart(copiedOrCutData, new BABYLON.Vector3(0, 0, 0));
+        }
+   }
+}
     </script>
 </body>
 </html>
