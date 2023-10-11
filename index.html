@@ -47,12 +47,12 @@
         <button>D (↓ z Axis)</button>
         <br>
         <h2>Rotate Object</h2>
-        <button>R (↑ x Axis)</button>
-        <button>F (↓ x Axis)</button>
-        <button>T (↑ y Axis)</button>
-        <button>G (↓ y Axis)</button>
-        <button>Y (↑ z Axis)</button>
-        <button>H (↓ z Axis)</button>
+        <button>R (⤵ x Axis)</button>
+        <button>F (⤴ x Axis)</button>
+        <button>T (⤵ y Axis)</button>
+        <button>G (⤴ y Axis)</button>
+        <button>Y (⤵ z Axis)</button>
+        <button>H (⤴ z Axis)</button>
         <br>
         <h2>Change Color</h2>
         <input type="color" id="colorPicker">
@@ -1137,7 +1137,7 @@
         const localAxes = new BABYLON.AxesViewer(scene, 1);
 
 
-        // Cargar y posicionar cada parte del modelo 3D "spot"
+        // Cargar y posicionar cada parte del modelo 3D 
         function loadAndPositionPart(part) {
             var meshURL = jsonParts[0].models;
             var meshName = part.mesh_name;
@@ -1284,7 +1284,7 @@ function downloadJson() {
   // Crear un enlace para la descarga
   const downloadLink = document.createElement("a");
   downloadLink.href = url;
-  downloadLink.download = "spot.json";
+  downloadLink.download = "model.json";
   downloadLink.click();
 
   // Liberar la URL del objeto Blob
@@ -1361,11 +1361,28 @@ const pasteButton = document.getElementById("paste-button");
 
 // Variable para almacenar los elementos copiados o cortados
 let copiedOrCutData = null;
+let copiedPart = null;
 
 // Evento para copiar
 function copyPart() {
     if (pickedMesh) {
       copiedOrCutData = pickedMesh ? { ...pickedMesh } : null; // Clona la figura seleccionada
+      copiedPart =  scene.getMeshByID(copiedOrCutData.id);
+      copiedPartData = {
+      mesh_id: randomName(),
+      mesh_name: copiedPart.name,
+      position:  [{
+        x: copiedPart.position.x+20,
+        y: copiedPart.position.y+20,
+        z: copiedPart.position.z,
+      }],
+      rotation: [{
+        x: BABYLON.Tools.ToDegrees(copiedPart.rotation.x),
+        y: BABYLON.Tools.ToDegrees(copiedPart.rotation.y),
+        z: BABYLON.Tools.ToDegrees(copiedPart.rotation.z),
+      }],
+      color: [copiedPart.material.diffuseColor]
+    };
     }
   
 }
@@ -1379,7 +1396,10 @@ function cutPart() {
         if (index !== -1) {
             jsonParts.splice(index, 1);
         }
+        scene.removeMesh(pickedMesh);
+        pickedMesh.dispose();
         pickedMesh = null;
+        
     }
 }
 
@@ -1388,10 +1408,23 @@ function pastePart() {
     if (pickedMesh) {
          if (copiedOrCutData) {
           // Concatena los elementos copiados o cortados al arreglo original
-          jsonParts.push(...copiedOrCutData);
-          loadAndPositionPart(copiedOrCutData, new BABYLON.Vector3(0, 0, 0));
+          jsonParts.push(copiedPartData);
+          //console.log(copiedPartData);
+          loadAndPositionPart(copiedPartData, new BABYLON.Vector3(0, 0, 0));
         }
    }
+}
+
+function randomName() {
+    const allowedchars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let randomName = '';
+
+    for (let i = 0; i < 5; i++) {
+        const randomIndex = Math.floor(Math.random() * allowedchars.length);
+        randomName += allowedchars.charAt(randomIndex);
+    }
+
+    return randomName;
 }
     </script>
 </body>
